@@ -166,7 +166,7 @@ def draw_bboxes(draw, objects, labels, obj_categories, ignore, width, label_size
     # Extracting bbox coordinates
 
     bboxes = []
-    if len(objects[0]["bbox"] > 4):
+    if len(objects[0]["bbox"]) > 4:
         for obj in objects:
             theta = np.deg2rad(-obj["bbox"][-1])
             R = np.array(
@@ -181,7 +181,6 @@ def draw_bboxes(draw, objects, labels, obj_categories, ignore, width, label_size
                     [obj["bbox"][0], obj["bbox"][1] + obj["bbox"][3]],
                 ]
             ).T
-            print(points)
 
             cx = int(obj["bbox"][0] + obj["bbox"][2] // 2)
             cy = int(obj["bbox"][1] + obj["bbox"][3] // 2)
@@ -190,10 +189,6 @@ def draw_bboxes(draw, objects, labels, obj_categories, ignore, width, label_size
             points = np.matmul(R, points) + T
             points = points.astype(int)
 
-            #
-            #        # Draw the bounding box on the image
-
-            print([points])
             bboxes.append(points)
     else:
         bboxes = [
@@ -209,7 +204,6 @@ def draw_bboxes(draw, objects, labels, obj_categories, ignore, width, label_size
     # print(len(bboxes), bboxes[0])
     # Draw bboxes
     for i, (c, b) in enumerate(zip(obj_categories, bboxes)):
-        print("b", b)
         if i not in ignore:
             # draw.rectangle(b, outline=c[-1], width=width)
             draw.line(
